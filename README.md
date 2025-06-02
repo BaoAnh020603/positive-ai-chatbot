@@ -4,7 +4,7 @@ An AI friend that brings positive energy and useful advice to your daily life!
 
 📖 Introduction
 AI Sunshine is a smart chatbot designed to bring positive energy and support to users. With a friendly interface and meaningful advice, AI Sunshine will always accompany you on your journey to find happiness and motivation.
-*✨ Outstanding features
+- ✨ Outstanding features
 
 🎨 Beautiful interface
 - Bright color gradient design
