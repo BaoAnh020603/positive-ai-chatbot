@@ -1,1 +1,137 @@
-
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FbbF24" />
+    <meta name="description" content="AI Sunshine - Chatbot tích cực mang lại năng lượng tích cực và lời khuyên hữu ích cho cuộc sống hàng ngày" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Sunshine - Chatbot Tích Cực" />
+    <meta property="og:description" content="Trò chuyện với AI Sunshine để nhận được những lời khuyên tích cực và năng lượng tuyệt vời mỗi ngày!" />
+    <meta property="og:image" content="%PUBLIC_URL%/preview.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="AI Sunshine - Chatbot Tích Cực" />
+    <meta property="twitter:description" content="Trò chuyện với AI Sunshine để nhận được những lời khuyên tích cực và năng lượng tuyệt vời mỗi ngày!" />
+    <meta property="twitter:image" content="%PUBLIC_URL%/preview.png" />
+    
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        background: linear-gradient(135deg, #FEF3C7 0%, #FCE7F3 50%, #E0E7FF 100%);
+        min-height: 100vh;
+      }
+      
+      .animate-bounce {
+        animation: bounce 1s infinite;
+      }
+      
+      @keyframes bounce {
+        0%, 20%, 53%, 80%, 100% {
+          transform: translate3d(0,0,0);
+        }
+        40%, 43% {
+          transform: translate3d(0,-30px,0);
+        }
+        70% {
+          transform: translate3d(0,-15px,0);
+        }
+        90% {
+          transform: translate3d(0,-4px,0);
+        }
+      }
+      
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #FbbF24, #F472B6, #A78BFA);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      .loading-hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .loading-sun {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #FbbF24, #F59E0B);
+        position: relative;
+        animation: rotate 2s linear infinite;
+        margin-bottom: 20px;
+      }
+      
+      .loading-sun::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #FEF3C7;
+      }
+      
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    </style>
+    
+    <title>AI Sunshine - Chatbot Tích Cực 🌟</title>
+  </head>
+  <body>
+    <noscript>Bạn cần bật JavaScript để chạy ứng dụng này.</noscript>
+    
+    <!-- Loading Screen -->
+    <div id="loading" class="loading-screen">
+      <div class="loading-sun"></div>
+      <h2 class="text-2xl font-bold mb-2">AI Sunshine</h2>
+      <p class="text-lg opacity-90">Đang khởi động năng lượng tích cực...</p>
+    </div>
+    
+    <div id="root"></div>
+    
+    <script>
+      // Hide loading screen after 2 seconds
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const loading = document.getElementById('loading');
+          loading.classList.add('loading-hidden');
+          
+          setTimeout(function() {
+            loading.style.display = 'none';
+          }, 500);
+        }, 1500);
+      });
+    </script>
+  </body>
+</html>
