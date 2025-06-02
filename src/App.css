@@ -1,1 +1,52 @@
+/* App.css */
+.App {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FCE7F3 50%, #E0E7FF 100%);
+}
 
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #FbbF24, #F472B6);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #F59E0B, #EC4899);
+}
+
+/* Smooth animations */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Focus styles */
+textarea:focus,
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.4);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .max-w-4xl {
+    margin: 0;
+    border-radius: 0;
+  }
+  
+  .rounded-3xl {
+    border-radius: 0;
+  }
+  
+  .p-4 {
+    padding: 1rem;
+  }
+}
