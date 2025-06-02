@@ -1,106 +1,78 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Sparkles } from 'lucide-react';
+import { Send, Sun, Sparkles, Heart, Star } from 'lucide-react';
 
 const PositiveAIChatbot = () => {
   const [messages, setMessages] = useState([
     {
-      id: 1,
-      text: "Xin chào! Tôi là AI Sunshine 🌞 Tôi ở đây để mang đến cho bạn năng lượng tích cực và những lời khuyên hữu ích. Hãy chia sẻ với tôi điều gì đó nhé!",
-      isBot: true,
-      timestamp: new Date().toLocaleTimeString()
+      type: 'ai',
+      content: 'Xin chào! Tôi là AI Sunshine 🌞 - trợ lý tích cực của bạn! Tôi ở đây để lắng nghe và mang đến những lời khuyên tích cực. Bạn đang cảm thấy thế nào hôm nay?',
+      timestamp: new Date()
     }
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(scrollToBottom, [messages]);
-
   const positiveResponses = {
-    greeting: [
-      "Chào bạn! Thật tuyệt khi gặp bạn hôm nay! 🌟",
-      "Xin chào! Bạn có vẻ rất tuyệt vời hôm nay! ✨",
-      "Hello! Tôi rất vui được trò chuyện với bạn! 😊",
-      "Chào bạn! Hy vọng bạn đang có một ngày tuyệt vời! 🌈"
+    greetings: [
+      "Chào bạn! Thật tuyệt khi được gặp bạn hôm nay! 🌟",
+      "Xin chào! Bạn đã làm tôi vui lên chỉ bằng việc ghé thăm! ✨",
+      "Hello! Hy vọng hôm nay của bạn tràn đầy niềm vui! 🌈"
     ],
     encouragement: [
-      "Bạn đang làm rất tốt! Hãy tiếp tục phát huy nhé! 💪",
-      "Tôi tin bạn có thể vượt qua mọi khó khăn. Bạn mạnh mẽ hơn bạn nghĩ! 🌟",
-      "Mỗi bước nhỏ đều là tiến bộ. Bạn đang trên đường thành công! 🚀",
-      "Hãy tự hào về bản thân! Bạn đã cố gắng rất nhiều! ⭐",
-      "Khó khăn chỉ là tạm thời, nhưng sự kiên trì của bạn sẽ mãi mãi! 💎"
+      "Bạn đang làm rất tốt! Mỗi bước nhỏ đều có ý nghĩa lớn! 💪",
+      "Tin tưởng vào bản thân - bạn mạnh mẽ hơn bạn nghĩ! 🌟",
+      "Khó khăn chỉ là tạm thời, nhưng sức mạnh của bạn là vĩnh cửu! ✨",
+      "Bạn có thể vượt qua mọi thử thách. Tôi tin tưởng vào bạn! 🚀"
     ],
     motivation: [
-      "Hôm nay là một ngày mới đầy cơ hội! Hãy tận dụng nó! 🌅",
-      "Bạn có tiềm năng vô hạn! Đừng bao giờ nghi ngờ bản thân! ✨",
-      "Thành công bắt đầu từ việc tin tương bản thân. Tôi tin bạn! 🌟",
-      "Hãy biến những giấc mơ thành hiện thực. Bạn xứng đáng với điều tốt nhất! 🎯",
-      "Mỗi ngày là một cơ hội để trở thành phiên bản tốt hơn của chính mình! 🦋"
+      "Hôm nay là một ngày mới tuyệt vời để bắt đầu những điều tích cực! 🌅",
+      "Mỗi thất bại đều dạy chúng ta điều gì đó quý giá. Hãy học hỏi và tiến lên! 📚",
+      "Thành công không phải đích đến, mà là hành trình. Hãy tận hưởng từng bước! 🛤️",
+      "Bạn là tác giả của câu chuyện cuộc đời mình. Hãy viết nó thật đẹp! ✍️"
     ],
-    wellness: [
-      "Đừng quên chăm sóc bản thân nhé! Sức khỏe tinh thần rất quan trọng! 🧘‍♀️",
-      "Hãy dành thời gian thư giãn và làm những việc bạn yêu thích! 🎨",
-      "Hít thở sâu, mỉm cười và nhớ rằng bạn rất đặc biệt! 😌",
-      "Hãy lắng nghe cơ thể và tâm hồn của bạn. Chúng biết bạn cần gì! 💆‍♀️",
-      "Ngủ đủ giấc, ăn uống lành mạnh và yêu thương bản thân nhé! 🥗"
+    support: [
+      "Tôi hiểu bạn đang cảm thấy khó khăn. Nhưng hãy nhớ, sau cơn mưa sẽ có cầu vồng! 🌈",
+      "Không sao cả, mọi người đều có những ngày khó khăn. Điều quan trọng là không bỏ cuộc! 💝",
+      "Bạn không đơn độc. Luôn có người quan tâm đến bạn, kể cả tôi! 🤗",
+      "Hãy cho phép bản thân được nghỉ ngơi và phục hồi. Bạn xứng đáng được yêu thương! 🌸"
     ],
-    relationships: [
-      "Những mối quan hệ tích cực sẽ mang lại hạnh phúc cho bạn! 👫",
-      "Hãy bao quanh mình bằng những người yêu thương và hỗ trợ bạn! 💕",
-      "Sự tử tế và lòng biết ơn sẽ làm cho mọi mối quan hệ tốt đẹp hơn! 🤝",
-      "Hãy là người bạn mà bạn muốn có trong cuộc sống! 🌸",
-      "Giao tiếp chân thành và lắng nghe là chìa khóa của mọi mối quan hệ! 👂"
+    positivity: [
+      "Cuộc sống đẹp biết bao khi chúng ta biết trân trọng những điều nhỏ bé! 🌺",
+      "Nụ cười của bạn có thể thắp sáng cả ngày của ai đó! 😊",
+      "Hãy tập trung vào những gì bạn có, thay vì những gì bạn thiếu! 🙏",
+      "Mỗi ngày là một món quà - đó là lý do người ta gọi nó là 'hiện tại'! 🎁"
     ]
   };
 
-  const quickSuggestions = [
-    "Tôi cần động viên",
-    "Cách giữ tích cực",
-    "Lời khuyên sức khỏe",
-    "Về các mối quan hệ",
-    "Tôi cảm thấy căng thẳng"
-  ];
+  const getRandomResponse = (category) => {
+    const responses = positiveResponses[category];
+    return responses[Math.floor(Math.random() * responses.length)];
+  };
 
-  const generateResponse = (userMessage) => {
+  const generateAIResponse = (userMessage) => {
     const message = userMessage.toLowerCase();
     
-    if (message.includes('chào') || message.includes('hello') || message.includes('hi')) {
-      return positiveResponses.greeting[Math.floor(Math.random() * positiveResponses.greeting.length)];
+    if (message.includes('xin chào') || message.includes('hello') || message.includes('hi')) {
+      return getRandomResponse('greetings');
+    } else if (message.includes('buồn') || message.includes('khó khăn') || message.includes('stress') || message.includes('mệt')) {
+      return getRandomResponse('support');
+    } else if (message.includes('động viên') || message.includes('khuyến khích') || message.includes('help')) {
+      return getRandomResponse('encouragement');
+    } else if (message.includes('động lực') || message.includes('motivation') || message.includes('thành công')) {
+      return getRandomResponse('motivation');
+    } else {
+      return getRandomResponse('positivity');
     }
-    
-    if (message.includes('động viên') || message.includes('buồn') || message.includes('khó khăn') || message.includes('stress')) {
-      return positiveResponses.encouragement[Math.floor(Math.random() * positiveResponses.encouragement.length)];
-    }
-    
-    if (message.includes('động lực') || message.includes('mục tiêu') || message.includes('thành công') || message.includes('tích cực')) {
-      return positiveResponses.motivation[Math.floor(Math.random() * positiveResponses.motivation.length)];
-    }
-    
-    if (message.includes('sức khỏe') || message.includes('thư giãn') || message.includes('căng thẳng') || message.includes('mệt mỏi')) {
-      return positiveResponses.wellness[Math.floor(Math.random() * positiveResponses.wellness.length)];
-    }
-    
-    if (message.includes('quan hệ') || message.includes('bạn bè') || message.includes('gia đình') || message.includes('yêu')) {
-      return positiveResponses.relationships[Math.floor(Math.random() * positiveResponses.relationships.length)];
-    }
-    
-    // Default positive response
-    const allResponses = Object.values(positiveResponses).flat();
-    return allResponses[Math.floor(Math.random() * allResponses.length)];
   };
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
 
     const userMessage = {
-      id: Date.now(),
-      text: inputText,
-      isBot: false,
-      timestamp: new Date().toLocaleTimeString()
+      type: 'user',
+      content: inputText,
+      timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -109,15 +81,14 @@ const PositiveAIChatbot = () => {
 
     // Simulate AI thinking time
     setTimeout(() => {
-      const botResponse = {
-        id: Date.now() + 1,
-        text: generateResponse(inputText),
-        isBot: true,
-        timestamp: new Date().toLocaleTimeString()
+      const aiResponse = {
+        type: 'ai',
+        content: generateAIResponse(inputText),
+        timestamp: new Date()
       };
-      setMessages(prev => [...prev, botResponse]);
+      setMessages(prev => [...prev, aiResponse]);
       setIsTyping(false);
-    }, 1500);
+    }, 1000 + Math.random() * 2000);
   };
 
   const handleKeyPress = (e) => {
@@ -127,118 +98,143 @@ const PositiveAIChatbot = () => {
     }
   };
 
-  const handleSuggestionClick = (suggestion) => {
-    setInputText(suggestion);
-  };
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-50 to-purple-100 p-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl mb-6 p-6">
-          <div className="flex items-center justify-center mb-4">
-            <div className="bg-gradient-to-r from-yellow-400 to-pink-400 p-3 rounded-full mr-4">
-              <Sparkles className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-yellow-50 to-pink-100 flex flex-col">
+      {/* Header */}
+      <div className="bg-white/80 backdrop-blur-md shadow-lg border-b-2 border-yellow-200">
+        <div className="max-w-4xl mx-auto px-4 py-6">
+          <div className="flex items-center justify-center space-x-3">
+            <div className="bg-gradient-to-r from-yellow-400 to-orange-400 p-3 rounded-full shadow-lg">
+              <Sun className="w-8 h-8 text-white animate-spin" style={{animationDuration: '8s'}} />
             </div>
-            <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
                 AI Sunshine
               </h1>
-              <p className="text-gray-600">Chatbot tích cực mang đến năng lượng tích cực</p>
+              <p className="text-gray-600 text-sm">Trợ lý tích cực của bạn</p>
+            </div>
+            <div className="hidden sm:flex space-x-2">
+              <Sparkles className="w-6 h-6 text-yellow-500 animate-pulse" />
+              <Heart className="w-6 h-6 text-pink-500 animate-bounce" />
+              <Star className="w-6 h-6 text-orange-500 animate-pulse" />
             </div>
           </div>
-        </div>
-
-        {/* Chat Container */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden">
-          {/* Messages */}
-          <div className="h-96 overflow-y-auto p-4 space-y-4">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex items-start space-x-3 ${message.isBot ? '' : 'flex-row-reverse space-x-reverse'}`}
-              >
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                  message.isBot 
-                    ? 'bg-gradient-to-r from-yellow-400 to-pink-400' 
-                    : 'bg-gradient-to-r from-blue-400 to-purple-400'
-                }`}>
-                  {message.isBot ? <Bot className="w-4 h-4 text-white" /> : <User className="w-4 h-4 text-white" />}
-                </div>
-                <div className={`flex flex-col ${message.isBot ? 'items-start' : 'items-end'} max-w-xs lg:max-w-md`}>
-                  <div className={`px-4 py-2 rounded-2xl ${
-                    message.isBot 
-                      ? 'bg-gradient-to-r from-yellow-100 to-pink-100 text-gray-800' 
-                      : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
-                  }`}>
-                    <p className="text-sm">{message.text}</p>
-                  </div>
-                  <span className="text-xs text-gray-500 mt-1">{message.timestamp}</span>
-                </div>
-              </div>
-            ))}
-
-            {isTyping && (
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-pink-400 flex items-center justify-center">
-                  <Bot className="w-4 h-4 text-white" />
-                </div>
-                <div className="bg-gradient-to-r from-yellow-100 to-pink-100 px-4 py-2 rounded-2xl">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Quick Suggestions */}
-          <div className="px-4 py-2 border-t border-gray-200">
-            <div className="flex flex-wrap gap-2">
-              {quickSuggestions.map((suggestion, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                  className="px-3 py-1 text-xs bg-gradient-to-r from-yellow-200 to-pink-200 text-gray-700 rounded-full hover:from-yellow-300 hover:to-pink-300 transition-all duration-200 transform hover:scale-105"
-                >
-                  {suggestion}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Input */}
-          <div className="p-4 border-t border-gray-200">
-            <div className="flex space-x-2">
-              <input
-                type="text"
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Chia sẻ với tôi điều gì đó tích cực..."
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent"
-              />
-              <button
-                onClick={handleSendMessage}
-                disabled={!inputText.trim()}
-                className="px-6 py-2 bg-gradient-to-r from-pink-400 to-purple-500 text-white rounded-full hover:from-pink-500 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-pink-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-6">
-          <p className="text-gray-600 text-sm">
-            💝 Được tạo với yêu thương để mang lại năng lượng tích cực cho bạn
-          </p>
         </div>
       </div>
+
+      {/* Chat Container */}
+      <div className="flex-1 max-w-4xl mx-auto w-full px-4 py-6 flex flex-col">
+        {/* Messages */}
+        <div className="flex-1 space-y-4 mb-6 overflow-y-auto max-h-96">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div
+                className={`max-w-xs sm:max-w-md lg:max-w-lg px-4 py-3 rounded-2xl shadow-md ${
+                  message.type === 'user'
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-br-sm'
+                    : 'bg-white/90 backdrop-blur-sm text-gray-800 rounded-bl-sm border border-yellow-200'
+                }`}
+              >
+                <p className="text-sm leading-relaxed">{message.content}</p>
+                <p className={`text-xs mt-2 ${
+                  message.type === 'user' ? 'text-blue-100' : 'text-gray-500'
+                }`}>
+                  {message.timestamp.toLocaleTimeString('vi-VN', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </p>
+              </div>
+            </div>
+          ))}
+
+          {isTyping && (
+            <div className="flex justify-start">
+              <div className="bg-white/90 backdrop-blur-sm px-4 py-3 rounded-2xl rounded-bl-sm shadow-md border border-yellow-200">
+                <div className="flex space-x-1">
+                  <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                  <div className="w-2 h-2 bg-pink-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                </div>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input Area */}
+        <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border-2 border-yellow-200 p-4">
+          <div className="flex space-x-3">
+            <textarea
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Chia sẻ suy nghĩ của bạn với AI Sunshine..."
+              className="flex-1 resize-none border-0 bg-transparent placeholder-gray-500 text-gray-800 focus:outline-none focus:ring-0 text-sm leading-relaxed"
+              rows="2"
+              disabled={isTyping}
+            />
+            <button
+              onClick={handleSendMessage}
+              disabled={!inputText.trim() || isTyping}
+              className="bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 disabled:from-gray-300 disabled:to-gray-400 text-white p-3 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 disabled:scale-100"
+            >
+              <Send className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="mt-4 flex flex-wrap gap-2 justify-center">
+          {[
+            "Tôi cần động viên 💪",
+            "Hôm nay thế nào? 🌟",
+            "Chia sẻ điều tích cực ✨",
+            "Cảm ơn bạn! 💝"
+          ].map((suggestion, index) => (
+            <button
+              key={index}
+              onClick={() => setInputText(suggestion.split(' ')[0] === 'Tôi' ? suggestion : suggestion)}
+              className="px-3 py-2 bg-white/60 hover:bg-white/80 backdrop-blur-sm rounded-full text-sm text-gray-700 border border-yellow-200 hover:border-yellow-300 transition-all duration-200 transform hover:scale-105"
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer with Copyright */}
+      <footer className="bg-white/80 backdrop-blur-md border-t-2 border-yellow-200 mt-8">
+        <div className="max-w-4xl mx-auto px-4 py-6">
+          <div className="text-center">
+            <div className="flex items-center justify-center space-x-2 mb-3">
+              <Sun className="w-5 h-5 text-yellow-500" />
+              <span className="text-lg font-semibold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
+                AI Sunshine
+              </span>
+              <Sun className="w-5 h-5 text-yellow-500" />
+            </div>
+            <p className="text-gray-600 text-sm mb-2">
+              Mang lại năng lượng tích cực cho mọi người 🌟
+            </p>
+            <div className="border-t border-yellow-200 pt-3">
+              <p className="text-gray-500 text-xs">
+                © 2025 Bản quyền thuộc về <span className="font-semibold text-gray-700">Nguyễn Nhật Bảo Anh</span>
+              </p>
+              <p className="text-gray-400 text-xs mt-1">
+                Made with ❤️ and ☀️
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
