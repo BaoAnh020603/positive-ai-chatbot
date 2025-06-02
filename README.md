@@ -7,31 +7,31 @@ AI Sunshine is a smart chatbot designed to bring positive energy and support to 
 ✨ Outstanding features
 
 🎨 Beautiful interface
-Bright color gradient design
-Responsive on all devices
-Smooth animation effects
-Eye-friendly dark mode
+- Bright color gradient design
+- Responsive on all devices
+- Smooth animation effects
+- Eye-friendly dark mode
 
 🤖 Smart AI
 
-Analyze message context
-5+ specialized response categories
-Over 25 diverse positive responses
-Continuously updated based on feedback
+- Analyze message context
+- 5+ specialized response categories
+- Over 25 diverse positive responses
+- Continuously updated based on feedback
 
 💡 Useful functions
 
-Quick question suggestions
-Chat history
-Share on social networks
-PWA support (install like an app)
+- Quick question suggestions
+- Chat history
+- Share on social networks
+- PWA support (install like an app)
 
 🛠️ Technology used
 
-Frontend: React 18, TailwindCSS
-Icons: Lucide React
-Deployment: GitHub Pages
-CI/CD: GitHub Actions
+- Frontend: React 18, TailwindCSS
+- Icons: Lucide React
+- Deployment: GitHub Pages
+- CI/CD: GitHub Actions
 
 🏃‍♂️ Run locally
 System requirements
@@ -41,7 +41,7 @@ npm or yarn
 
 Settings
 # Clone repository
-git clone https://github.com/[username]/positive-ai-chatbot.git
+git clone https://github.com/BaoAnh020603/positive-ai-chatbot.git
 cd positive-ai-chatbot
 
 # Install dependencies
@@ -49,8 +49,6 @@ npm install
 
 # Run the development server
 npm start
-
-# Open http://localhost:3000
 
 Build production
 # Build
